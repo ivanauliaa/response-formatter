@@ -1,3 +1,9 @@
+# Add to Dependencies
+
+```bash
+go get github.com/ivanauliaa/response-formatter
+```
+
 # Import
 
 ```go
