@@ -6,7 +6,23 @@ import formatter "github.com/ivanauliaa/response-formatter"
 
 # Usage
 
-**gin Example**
+Functions
+```go
+- ResponseFormatter(status int32, message string, data interface{})
+- BadRequestResponse(data interface{})
+- NotFoundResponse(data interface{})
+- UnauthorizedResponse(data interface{})
+- InternalServerErrorResponse(data interface{})
+- SuccessResponse(data interface{})
+```
+
+Params
+- `status`: an `int32` which represent HTTP status code. You can pass with int literal, but I prefer using net/http HTTP status constants.
+- `message`: a `string` which represent response message which is success or fail.
+- `data`: an `interface{}` which represent requested data from client or detailed error messages. You can pass with either `map[string]interface{}` or `struct` with exported JSON tagged properties data.
+# Example
+
+**gin**
 
 ```go
 func Redirect(c *gin.Context) {
@@ -31,7 +47,7 @@ func Redirect(c *gin.Context) {
 
 ```
 
-**echo Example**
+**echo**
 
 ```go
 func DeleteUserController(c echo.Context) error {
