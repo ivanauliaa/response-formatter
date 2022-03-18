@@ -6,7 +6,9 @@ import formatter "github.com/ivanauliaa/response-formatter"
 
 # Usage
 
-Functions
+**Functions**
+
+All of these functions are returning responseFormat struct
 ```go
 - ResponseFormatter(status int32, message string, data interface{})
 - BadRequestResponse(data interface{})
@@ -16,7 +18,7 @@ Functions
 - SuccessResponse(data interface{})
 ```
 
-Params
+**Params**
 - `status`: an `int32` which represent HTTP status code. You can pass with int literal, but I prefer using net/http HTTP status constants.
 - `message`: a `string` which represent response message which is success or fail.
 - `data`: an `interface{}` which represent requested data from client or detailed error messages. You can pass with either `map[string]interface{}` or `struct` with exported JSON tagged properties data.
@@ -33,10 +35,10 @@ func Redirect(c *gin.Context) {
 	err := collection.FindOne(utils.GLOBAL_CONTEXT, bson.M{"urlCode": urlCode}).Decode(result)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			c.JSON(http.StatusBadRequest, formatter.BadRequestResponse({"error": fmt.Sprintf("No URL with code: %s", urlCode)}))
+			c.JSON(http.StatusBadRequest, formatter.BadRequestResponse(gin.H{"error": fmt.Sprintf("No URL with code: %s", urlCode)}))
 			return
 		} else {
-			c.JSON(http.StatusInternalServerError, formatter.BadRequestResponse({"error": err.Error()}))
+			c.JSON(http.StatusInternalServerError, formatter.InternalServerErrorResponse(gin.H{"error": err.Error()}))
 			return
 		}
 	}
@@ -53,7 +55,7 @@ func Redirect(c *gin.Context) {
 func DeleteUserController(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, formatter.BadRequestResponse(nil))
+		return c.JSON(http.StatusBadRequest, formatter.BadRequestResponse(map[string]interface{}{"error": err.Error()}))
 	}
 
 	for index, user := range users {
