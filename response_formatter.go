@@ -58,7 +58,7 @@ func InternalServerErrorResponse(data interface{}) responseFormat {
 	}
 }
 
-// Response with 200 status and fail message, you can pass data with actual data return arguments
+// Response with 200 status and fail message, you can pass data with actual data param return arguments
 func SuccessResponse(data interface{}) responseFormat {
 	return responseFormat{
 		Status:  http.StatusOK,
