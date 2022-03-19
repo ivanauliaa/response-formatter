@@ -30,6 +30,21 @@ All of these functions are returning responseFormat struct
 - `data`: an `interface{}` which represent requested data from client or detailed error messages. You can pass with either `map[string]interface{}` or `struct` with exported JSON tagged properties data.
 # Example
 
+**net/http**
+
+```go
+func getAllUsers(w http.ResponseWriter, r *http.Request) {
+	result, err := json.Marshal(formatter.SuccessResponse(users))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(result)
+}
+```
+
 **gin**
 
 ```go
@@ -52,7 +67,6 @@ func Redirect(c *gin.Context) {
 	longURL := result.LongURL
 	c.Redirect(http.StatusPermanentRedirect, longURL)
 }
-
 ```
 
 **echo**
